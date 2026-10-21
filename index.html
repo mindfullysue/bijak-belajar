@@ -273,7 +273,7 @@
                     <div class="bg-white rounded-[2rem] p-8 border-4 border-darkBorder shadow-[8px_8px_0_#0f172a] text-center transform hover:-translate-y-2 transition-all">
                         <div class="w-24 h-24 bg-kidPink text-white rounded-full flex items-center justify-center text-5xl font-bold font-kids mx-auto mb-6 shadow-[4px_4px_0_#0f172a] border-4 border-darkBorder">1</div>
                         <h3 class="font-kids text-3xl font-bold text-darkBorder mb-3">Buat Bayaran</h3>
-                        <p class="text-gray-700 font-bold text-lg">Klik butang beli dan bayar secara dalam talian melalui ToyyibPay (FPX).</p>
+                        <p class="text-gray-700 font-bold text-lg">Klik butang beli dan bayar secara dalam talian melalui FPX atau kad.</p>
                     </div>
                     <div class="bg-white rounded-[2rem] p-8 border-4 border-darkBorder shadow-[8px_8px_0_#0f172a] text-center transform hover:-translate-y-2 transition-all">
                         <div class="w-24 h-24 bg-kidGreen text-white rounded-full flex items-center justify-center text-5xl font-bold font-kids mx-auto mb-6 shadow-[4px_4px_0_#0f172a] border-4 border-darkBorder">2</div>
@@ -369,10 +369,10 @@
                             <li class="flex items-start gap-3"><i class="fas fa-check text-kidPink mt-1 text-2xl"></i><span class="text-gray-800 font-bold text-lg">Bayar sekali, tiada yuran bulanan</span></li>
                             <li class="flex items-start gap-3"><i class="fas fa-check text-kidPink mt-1 text-2xl"></i><span class="text-gray-800 font-bold text-lg">Pautan akses dihantar ke e-mel selepas bayaran disahkan</span></li>
                         </ul>
-                        <a href="https://toyyibpay.com/BijakBelajarKiddo" target="_blank" rel="noopener" data-checkout class="block w-full bg-kidYellow text-darkBorder text-center font-kids text-3xl py-4 rounded-2xl font-bold hover:bg-yellow-400 transform hover:scale-105 transition-all shadow-[0_8px_0_#0f172a] active:shadow-none active:translate-y-2 border-4 border-darkBorder">
+                        <a href="https://buy.stripe.com/bJe14n08HaBx71yeWnfMA01" target="_blank" rel="noopener" data-checkout class="block w-full bg-kidYellow text-darkBorder text-center font-kids text-3xl py-4 rounded-2xl font-bold hover:bg-yellow-400 transform hover:scale-105 transition-all shadow-[0_8px_0_#0f172a] active:shadow-none active:translate-y-2 border-4 border-darkBorder">
                             <i class="fas fa-shopping-cart mr-2"></i> Beli RM47
                         </a>
-                        <p class="text-center text-sm text-gray-600 font-semibold mt-5"><i class="fas fa-lock mr-1"></i> Pembayaran selamat melalui ToyyibPay, diterima atas nama <b>IG Go Global</b>.</p>
+                        <p class="text-center text-sm text-gray-600 font-semibold mt-5"><i class="fas fa-lock mr-1"></i> Pembayaran selamat melalui Stripe (FPX &amp; kad).</p>
                     </div>
                 </div>
             </div>
@@ -419,7 +419,7 @@
             <h2 class="font-kids text-4xl md:text-6xl font-bold mb-6 drop-shadow-md text-darkBorder">Berikan Anak Pengalaman Belajar Matematik Yang Seronok Hari Ini!</h2>
             <p class="text-xl md:text-2xl text-blue-900 mb-10 max-w-2xl mx-auto font-bold drop-shadow-sm">Jadikan masa menggunakan telefon pintar lebih bermanfaat dengan latihan matematik dalam bentuk permainan.</p>
             <div class="flex flex-col sm:flex-row gap-6 justify-center">
-                <a href="https://toyyibpay.com/BijakBelajarKiddo" target="_blank" rel="noopener" data-checkout class="bg-kidPink text-white font-kids text-2xl md:text-3xl px-10 md:px-12 py-5 rounded-full font-bold hover:bg-red-600 transform hover:scale-105 transition-all shadow-[0_8px_0_#0f172a] border-4 border-darkBorder flex items-center justify-center gap-3">
+                <a href="https://buy.stripe.com/bJe14n08HaBx71yeWnfMA01" target="_blank" rel="noopener" data-checkout class="bg-kidPink text-white font-kids text-2xl md:text-3xl px-10 md:px-12 py-5 rounded-full font-bold hover:bg-red-600 transform hover:scale-105 transition-all shadow-[0_8px_0_#0f172a] border-4 border-darkBorder flex items-center justify-center gap-3">
                     <i class="fas fa-shopping-cart text-white"></i> Dapatkan Sekarang – RM47
                 </a>
             </div>
@@ -430,7 +430,7 @@
     <footer class="bg-darkBorder text-blue-200 py-8 text-center text-sm border-t-8 border-kidBlue pb-28">
         <div class="max-w-7xl mx-auto px-4">
             <p class="font-bold text-white text-base">© 2026 Bijak Belajar oleh kiddo.mobi</p>
-            <p class="mt-2 text-xs opacity-80 font-semibold">Pembayaran melalui ToyyibPay, diterima atas nama IG Go Global. Pertanyaan: WhatsApp 012-292 7698.</p>
+            <p class="mt-2 text-xs opacity-80 font-semibold">Pembayaran selamat melalui Stripe. Pertanyaan: WhatsApp 012-292 7698.</p>
             <p class="mt-3 text-xs opacity-60 font-semibold">Penafian: Laman web ini bukan sebahagian daripada laman web Facebook atau Meta Platforms, Inc. dan tidak disokong oleh Facebook dalam apa jua cara. FACEBOOK ialah tanda dagangan Meta Platforms, Inc.</p>
         </div>
     </footer>
@@ -458,8 +458,8 @@
                 });
             });
 
-            // Meta Pixel: InitiateCheckout bila tekan butang ToyyibPay
-            document.querySelectorAll('a[href*="toyyibpay.com"]').forEach(a => {
+            // Meta Pixel: InitiateCheckout bila tekan butang beli
+            document.querySelectorAll('a[data-checkout]').forEach(a => {
                 a.addEventListener('click', () => {
                     if (window.fbq) fbq('track', 'InitiateCheckout', {value: 47, currency: 'MYR'});
                 });
