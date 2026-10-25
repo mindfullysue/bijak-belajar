@@ -13,6 +13,19 @@ n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
 n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
 document,'script','https://connect.facebook.net/en_US/fbevents.js');
+// Pulihkan Meta click ID yang dibawa melalui Stripe (utm_term + utm_medium),
+// supaya pembelian dapat dipadankan dengan klik iklan walaupun selepas redirect bank FPX.
+try {
+  var q = new URLSearchParams(window.location.search);
+  var clickId = (q.get('utm_term') || '') + (q.get('utm_medium') || '');
+  if (clickId && /^[A-Za-z0-9_-]+$/.test(clickId) && clickId.length >= 20) {
+    var cur = document.cookie.match(/(?:^|;\s*)_fbc=([^;]+)/);
+    if (!cur || decodeURIComponent(cur[1]).split('.').pop() !== clickId) {
+      document.cookie = '_fbc=fb.1.' + Date.now() + '.' + clickId +
+        '; path=/; max-age=7776000; SameSite=Lax; Secure';
+    }
+  }
+} catch (e) {}
 fbq('init', '1255559203434876');
 fbq('track', 'PageView');
 
@@ -105,8 +118,8 @@ src="https://www.facebook.com/tr?id=1255559203434876&ev=PageView&noscript=1"></n
 
       <ul class="steps">
         <li><span class="n">1</span><span><strong>Bookmark</strong> halaman pakej selepas dibuka, supaya senang masuk semula.</span></li>
-        <li><span class="n">2</span><span>Resit pembayaran telah dihantar ke <strong>emel</strong> anda.</span></li>
-        <li><span class="n">3</span><span>Link akses juga akan dihantar ke emel anda dalam masa <strong>24 jam</strong>.</span></li>
+        <li><span class="n">2</span><span>Resit pembayaran <strong>bersama link akses</strong> telah dihantar ke emel anda.</span></li>
+        <li><span class="n">3</span><span>Tak jumpa emel? Semak folder <strong>Spam</strong> atau <strong>Promotions</strong>.</span></li>
       </ul>
 
       <!-- TODO: replace 60122927698 with the support WhatsApp number -->

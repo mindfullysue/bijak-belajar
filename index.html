@@ -466,5 +466,42 @@
             });
         });
     </script>
+    <script>
+        // Bawa Meta click ID (fbclid) ke Stripe supaya pembelian FPX dapat dipadankan dengan iklan.
+        // Jika apa-apa gagal, butang beli kekal dengan link asal.
+        (function () {
+            try {
+                var OK = /^[A-Za-z0-9_-]+$/;
+                var params = new URLSearchParams(window.location.search);
+                var fbclid = params.get('fbclid') || '';
+                if (!fbclid) {
+                    var m = document.cookie.match(/(?:^|;\s*)_fbc=fb\.\d+\.\d+\.([^;]+)/);
+                    if (m) fbclid = decodeURIComponent(m[1]);
+                }
+                if (!fbclid || !OK.test(fbclid) || fbclid.length > 300) return;
+                var part1 = fbclid.slice(0, 150);
+                var part2 = fbclid.slice(150);
+                var pass = ['utm_source', 'utm_campaign', 'utm_content'];
+                var apply = function () {
+                    document.querySelectorAll('a[data-checkout]').forEach(function (a) {
+                        try {
+                            var url = new URL(a.href);
+                            if (url.hostname.indexOf('stripe.com') === -1) return;
+                            pass.forEach(function (k) {
+                                var v = params.get(k);
+                                if (v && OK.test(v) && v.length <= 150) url.searchParams.set(k, v);
+                            });
+                            url.searchParams.set('utm_term', part1);
+                            if (part2) url.searchParams.set('utm_medium', part2);
+                            else url.searchParams.delete('utm_medium');
+                            a.href = url.toString();
+                        } catch (e) {}
+                    });
+                };
+                if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', apply);
+                else apply();
+            } catch (e) {}
+        })();
+    </script>
 </body>
 </html>
