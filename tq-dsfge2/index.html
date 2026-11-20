@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Terima Kasih – Bijak Belajar</title>
+
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1255559203434876');
+fbq('track', 'PageView');
+
+(function () {
+  // Halaman ini hanya dibuka oleh BCL selepas bayaran BERJAYA (success URL rahsia).
+  // Purchase dihantar sekali sahaja; refresh dalam masa 6 jam tidak dikira semula.
+  var params = new URLSearchParams(window.location.search);
+  var ref = params.get('order_number') || params.get('order_no') || params.get('order_id') ||
+            params.get('transaction_id') || params.get('ref') || params.get('reference') || '';
+  if (ref && !/^[A-Za-z0-9_-]{1,100}$/.test(ref)) ref = '';
+  var key = 'bb_bcl_purchase';
+  var now = Date.now();
+  try {
+    var last = JSON.parse(localStorage.getItem(key) || 'null');
+    if (last && ((ref && last.ref === ref) || (!ref && now - last.t < 6 * 3600 * 1000))) return;
+  } catch (e) {}
+  var eventID = ref ? 'bcl_' + ref : 'bcl_' + now + '_' + Math.random().toString(36).slice(2, 8);
+  fbq('track', 'Purchase', { value: 47.00, currency: 'MYR', content_name: 'Bijak Belajar' }, { eventID: eventID });
+  try { localStorage.setItem(key, JSON.stringify({ ref: ref, t: now })); } catch (e) {}
+})();
+</script>
+<noscript><img height="1" width="1" style="display:none" alt=""
+src="https://www.facebook.com/tr?id=1255559203434876&ev=PageView&noscript=1"></noscript>
+<!-- End Meta Pixel -->
+
+<style>
+  :root {
+    --bg: #fff8e1;
+    --card: #ffffff;
+    --ink: #1f2a44;
+    --muted: #5b6478;
+    --brand: #e91e63;
+    --brand-ink: #ffffff;
+    --ok: #2e7d32;
+    --line: #f1e3b8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.55;
+  }
+  .wrap { max-width: 520px; margin: 0 auto; padding: 32px 16px 48px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 28px 22px;
+    text-align: center;
+    box-shadow: 0 6px 24px rgba(0,0,0,.06);
+  }
+  .tick {
+    width: 64px; height: 64px; margin: 0 auto 12px;
+    border-radius: 50%; background: var(--ok);
+    display: grid; place-items: center;
+  }
+  h1 { font-size: 1.6rem; margin: 6px 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 22px; }
+  .btn {
+    display: block; width: 100%;
+    background: var(--brand); color: var(--brand-ink);
+    text-decoration: none; font-weight: 700; font-size: 1.1rem;
+    padding: 16px; border-radius: 14px;
+  }
+  .steps { text-align: left; margin: 24px 0 0; padding: 0; list-style: none; }
+  .steps li {
+    padding: 12px 0; border-top: 1px solid var(--line);
+    display: flex; gap: 12px;
+  }
+  .n {
+    flex: 0 0 28px; height: 28px; border-radius: 50%;
+    background: var(--bg); font-weight: 700;
+    display: grid; place-items: center;
+  }
+  .help { margin-top: 22px; font-size: .95rem; color: var(--muted); }
+  .help a { color: var(--brand); font-weight: 600; }
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="card">
+      <div class="tick" aria-hidden="true">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+      </div>
+      <h1>Terima kasih! Pembayaran berjaya.</h1>
+      <p class="sub">Pakej Bijak Belajar anda sudah sedia untuk digunakan.</p>
+
+            <a class="btn" href="https://bijakbelajardigital.my.canva.site/info" target="_blank" rel="noopener">Buka Pakej Bijak Belajar</a>
+
+      <ul class="steps">
+        <li><span class="n">1</span><span><strong>Bookmark</strong> halaman pakej selepas dibuka, supaya senang masuk semula.</span></li>
+        <li><span class="n">2</span><span>Resit pembayaran daripada BCL <strong>bersama link akses</strong> dihantar ke emel anda.</span></li>
+        <li><span class="n">3</span><span>Tak jumpa emel? Semak folder <strong>Spam</strong> atau <strong>Promotions</strong>.</span></li>
+      </ul>
+
+            <p class="help">Perlukan bantuan? <a href="https://wa.me/60122927698" target="_blank" rel="noopener">WhatsApp kami</a></p>
+    </div>
+  </main>
+</body>
+</html>

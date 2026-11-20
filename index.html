@@ -369,10 +369,10 @@
                             <li class="flex items-start gap-3"><i class="fas fa-check text-kidPink mt-1 text-2xl"></i><span class="text-gray-800 font-bold text-lg">Bayar sekali, tiada yuran bulanan</span></li>
                             <li class="flex items-start gap-3"><i class="fas fa-check text-kidPink mt-1 text-2xl"></i><span class="text-gray-800 font-bold text-lg">Pautan akses dihantar ke e-mel selepas bayaran disahkan</span></li>
                         </ul>
-                        <a href="https://buy.stripe.com/8x2dRb88FcvSfJFdx98EM00" target="_blank" rel="noopener" data-checkout class="block w-full bg-kidYellow text-darkBorder text-center font-kids text-3xl py-4 rounded-2xl font-bold hover:bg-yellow-400 transform hover:scale-105 transition-all shadow-[0_8px_0_#0f172a] active:shadow-none active:translate-y-2 border-4 border-darkBorder">
+                        <a href="https://iggoglobal.bcl.my/form/bijak-belajar" target="_blank" rel="noopener" data-checkout class="block w-full bg-kidYellow text-darkBorder text-center font-kids text-3xl py-4 rounded-2xl font-bold hover:bg-yellow-400 transform hover:scale-105 transition-all shadow-[0_8px_0_#0f172a] active:shadow-none active:translate-y-2 border-4 border-darkBorder">
                             <i class="fas fa-shopping-cart mr-2"></i> Beli RM47
                         </a>
-                        <p class="text-center text-sm text-gray-600 font-semibold mt-5"><i class="fas fa-lock mr-1"></i> Pembayaran selamat melalui Stripe (FPX &amp; kad).</p>
+                        <p class="text-center text-sm text-gray-600 font-semibold mt-5"><i class="fas fa-lock mr-1"></i> Pembayaran selamat melalui BCL (FPX perbankan dalam talian).</p>
                     </div>
                 </div>
             </div>
@@ -419,7 +419,7 @@
             <h2 class="font-kids text-4xl md:text-6xl font-bold mb-6 drop-shadow-md text-darkBorder">Berikan Anak Pengalaman Belajar Matematik Yang Seronok Hari Ini!</h2>
             <p class="text-xl md:text-2xl text-blue-900 mb-10 max-w-2xl mx-auto font-bold drop-shadow-sm">Jadikan masa menggunakan telefon pintar lebih bermanfaat dengan latihan matematik dalam bentuk permainan.</p>
             <div class="flex flex-col sm:flex-row gap-6 justify-center">
-                <a href="https://buy.stripe.com/8x2dRb88FcvSfJFdx98EM00" target="_blank" rel="noopener" data-checkout class="bg-kidPink text-white font-kids text-2xl md:text-3xl px-10 md:px-12 py-5 rounded-full font-bold hover:bg-red-600 transform hover:scale-105 transition-all shadow-[0_8px_0_#0f172a] border-4 border-darkBorder flex items-center justify-center gap-3">
+                <a href="https://iggoglobal.bcl.my/form/bijak-belajar" target="_blank" rel="noopener" data-checkout class="bg-kidPink text-white font-kids text-2xl md:text-3xl px-10 md:px-12 py-5 rounded-full font-bold hover:bg-red-600 transform hover:scale-105 transition-all shadow-[0_8px_0_#0f172a] border-4 border-darkBorder flex items-center justify-center gap-3">
                     <i class="fas fa-shopping-cart text-white"></i> Dapatkan Sekarang – RM47
                 </a>
             </div>
@@ -430,7 +430,7 @@
     <footer class="bg-darkBorder text-blue-200 py-8 text-center text-sm border-t-8 border-kidBlue pb-28">
         <div class="max-w-7xl mx-auto px-4">
             <p class="font-bold text-white text-base">© 2026 Bijak Belajar oleh kiddo.mobi</p>
-            <p class="mt-2 text-xs opacity-80 font-semibold">Pembayaran selamat melalui Stripe. Pertanyaan: WhatsApp 012-292 7698.</p>
+            <p class="mt-2 text-xs opacity-80 font-semibold">Pembayaran selamat melalui BCL. Pertanyaan: WhatsApp 012-292 7698.</p>
             <p class="mt-3 text-xs opacity-60 font-semibold">Penafian: Laman web ini bukan sebahagian daripada laman web Facebook atau Meta Platforms, Inc. dan tidak disokong oleh Facebook dalam apa jua cara. FACEBOOK ialah tanda dagangan Meta Platforms, Inc.</p>
         </div>
     </footer>
@@ -467,7 +467,7 @@
         });
     </script>
     <script>
-        // Bawa Meta click ID (fbclid) ke Stripe supaya pembelian FPX dapat dipadankan dengan iklan.
+        // Bawa Meta click ID (fbclid) + UTM ke halaman bayaran BCL.
         // Jika apa-apa gagal, butang beli kekal dengan link asal.
         (function () {
             try {
@@ -478,22 +478,17 @@
                     var m = document.cookie.match(/(?:^|;\s*)_fbc=fb\.\d+\.\d+\.([^;]+)/);
                     if (m) fbclid = decodeURIComponent(m[1]);
                 }
-                if (!fbclid || !OK.test(fbclid) || fbclid.length > 300) return;
-                var part1 = fbclid.slice(0, 150);
-                var part2 = fbclid.slice(150);
-                var pass = ['utm_source', 'utm_campaign', 'utm_content'];
+                var pass = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
                 var apply = function () {
                     document.querySelectorAll('a[data-checkout]').forEach(function (a) {
                         try {
                             var url = new URL(a.href);
-                            if (url.hostname.indexOf('stripe.com') === -1) return;
+                            if (url.hostname.indexOf('bcl.my') === -1) return;
                             pass.forEach(function (k) {
                                 var v = params.get(k);
                                 if (v && OK.test(v) && v.length <= 150) url.searchParams.set(k, v);
                             });
-                            url.searchParams.set('utm_term', part1);
-                            if (part2) url.searchParams.set('utm_medium', part2);
-                            else url.searchParams.delete('utm_medium');
+                            if (fbclid && OK.test(fbclid) && fbclid.length <= 300) url.searchParams.set('fbclid', fbclid);
                             a.href = url.toString();
                         } catch (e) {}
                     });
